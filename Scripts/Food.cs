@@ -4,18 +4,48 @@ using UnityEngine;
 
 public class Food : MonoBehaviour
 {
+    private float xPosition;
+    private float yPosition;
+    private int xBoard = 20;
+    private int yBoard = 11;
+    private Vector2 StartPosition;
+
     public bool isContact = false;
-    SpawnPosition spawnPosition;
-    // Start is called before the first frame update
+
+
     public BoxCollider2D gridArea;
+
+
+    public int score = 0;
+
+    private void Start()
+    {
+        StartCoordinatesVector();
+
+       
+    }
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Player")
-        {
-            isContact = true;
-            spawnPosition.GeneratePosition();
-            this.transform.position = spawnPosition.StartCoordinatesVector();
+        {  
+            StartCoordinatesVector();
+            transform.position = StartPosition;
+            score++;
         }
 
     }
+   
+    public void StartCoordinatesVector()
+    {
+        GeneratePosition();
+        StartPosition = new Vector2(xPosition, yPosition);
+        transform.position = StartPosition;
+    }
+    public void GeneratePosition()
+    {
+        xPosition = (int)Random.Range(-xBoard, xBoard);
+        yPosition = (int)Random.Range(-yBoard, yBoard);
+    }
+
+    
 }
