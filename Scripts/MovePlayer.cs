@@ -12,8 +12,8 @@ public class MovePlayer : MonoBehaviour
 
     private float xPosition;
     private float yPosition;
-    private int xBoard = 20;
-    private int yBoard = 11;
+    private int xBoard = 19;
+    private int yBoard = 10;
     private Vector2 StartPosition;
 
 
@@ -42,18 +42,18 @@ public class MovePlayer : MonoBehaviour
     void Update()
     {
         CheckInput();
-
+        
     }
 
     private void Teleportate()
     {
-        if(transform.position.x > xBoard || transform.position.x < -xBoard)
+        if(transform.position.x > xBoard+1|| transform.position.x < -xBoard-1)
         {
-            transform.position = new Vector2(-transform.position.x, transform.position.y);
+            transform.position = new Vector2(-transform.position.x + 1* Mathf.Sign(transform.position.x), transform.position.y);
         }
-        if (transform.position.y > yBoard || transform.position.y < -yBoard)
+        if (transform.position.y > yBoard+1 || transform.position.y < -yBoard-1)
         {
-            transform.position = new Vector2(transform.position.x, -transform.position.y);
+            transform.position = new Vector2(transform.position.x, -transform.position.y+ 1 * Mathf.Sign(transform.position.y));
         }
     }
   
@@ -108,7 +108,7 @@ public class MovePlayer : MonoBehaviour
         {
             Grow();
         }
-        if (other.tag == "Player")
+        if ((other.tag == "Player") || (other.tag == "Wall"))
         {
             isGameOver = true;
            

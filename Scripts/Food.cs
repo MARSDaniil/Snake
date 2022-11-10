@@ -6,8 +6,8 @@ public class Food : MonoBehaviour
 {
     private float xPosition;
     private float yPosition;
-    private int xBoard = 20;
-    private int yBoard = 11;
+    private int xBoard = 19;
+    private int yBoard = 10;
     private Vector2 StartPosition;
 
     public bool isContact = false;
