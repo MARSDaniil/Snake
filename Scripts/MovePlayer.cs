@@ -19,6 +19,12 @@ public class MovePlayer : MonoBehaviour
 
     private List<Transform> segments;
     public Transform segmentPrefab;
+
+
+    private Vector2 tapPosition;
+    private Vector2 swipeDelta;
+    private bool isSwiping = false;
+    [SerializeField] float deadZone = 30;
     private void Start()
     {
         GeneratePosition();
@@ -57,44 +63,7 @@ public class MovePlayer : MonoBehaviour
         }
     }
   
-    private void CheckInput()
-    {
-#if UNITY_STANDALONE || UNITY_WEBGL
-        PcWeblGControll();
-#endif
-#if UNITY_IOS ||UNITY_ANDROID
-        IosAndroidControll();
-#endif
-    }
-    void PcWeblGControll()
-
-    {
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            inputController = new Vector2(0, 1);
-        }
-        else if (Input.GetKeyDown(KeyCode.S))
-        {
-            inputController = new Vector2(0, -1);
-        }
-        else if (Input.GetKeyDown(KeyCode.D))
-        {
-            inputController = new Vector2(1, 0);
-        }
-        else if (Input.GetKeyDown(KeyCode.A))
-        {
-            inputController = new Vector2(-1, 0);
-        }
-    }
-    void IosAndroidControll()
-    {
-        if (Input.touchCount > 0)
-        {
-         //   Touch myTouch = Input.GetTouch(0);
-       //    Vector2 positionOnScreen = myTouch.position;
-          //  Debug.Log(positionOnScreen);
-        }
-    }
+    
     private void FixedUpdate()
     {
         if (isGameOver == false)
@@ -133,4 +102,94 @@ public class MovePlayer : MonoBehaviour
            
         }
     }
+
+
+    private void CheckInput()
+    {
+#if UNITY_STANDALONE || UNITY_WEBGL
+       PcWeblGControll();
+#endif
+#if UNITY_IOS || UNITY_ANDROID
+        IosAndroidControll();
+#endif
+    }
+    void PcWeblGControll()
+
+    {
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            inputController = new Vector2(0, 1);
+        }
+        else if (Input.GetKeyDown(KeyCode.S))
+        {
+            inputController = new Vector2(0, -1);
+        }
+        else if (Input.GetKeyDown(KeyCode.D))
+        {
+            inputController = new Vector2(1, 0);
+        }
+        else if (Input.GetKeyDown(KeyCode.A))
+        {
+            inputController = new Vector2(-1, 0);
+        }
+    }
+    void IosAndroidControll()
+    {
+        if (Input.touchCount > 0)
+        {
+         //   Touch myTouch = Input.GetTouch(0);
+         //   Vector2 positionOnScreen = myTouch.position;
+            if(Input.GetTouch(0).phase == TouchPhase.Began)
+            {
+                isSwiping = true;
+                Vector2 positionOnScreen = Input.GetTouch(0).position;
+            }
+           else if (Input.GetTouch(0).phase==TouchPhase.Canceled || Input.GetTouch(0).phase == TouchPhase.Ended)
+            {
+                ResetSwipe();
+            }
+            CheckSwipe();
+            ResetSwipe();
+        }
+    }
+    private void ResetSwipe()
+    {
+        isSwiping = false;
+        tapPosition = Vector2.zero;
+        swipeDelta = Vector2.zero;
+    }
+    private void CheckSwipe()
+    {
+         swipeDelta = Vector2.zero;
+         if (isSwiping)
+         {
+            swipeDelta = Input.GetTouch(0).position - tapPosition;
+          }
+         if(swipeDelta.magnitude > deadZone)
+         {
+            if(Mathf.Abs(swipeDelta.x) > Mathf.Abs(swipeDelta.y))
+            {
+                if(swipeDelta.x > 0)
+                {
+                    inputController = new Vector2(1,0);
+                }
+                else
+                {
+                    inputController = new Vector2(-1,0);
+                }
+            }
+            else
+            {
+                if (swipeDelta.y > 0)
+                {
+                    inputController = new Vector2(0, 1);
+                }
+                else
+                {
+                    inputController = new Vector2(0, -1);
+                }
+            }
+         }
+    }
+
 }
