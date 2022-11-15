@@ -59,6 +59,16 @@ public class MovePlayer : MonoBehaviour
   
     private void CheckInput()
     {
+#if UNITY_STANDALONE || UNITY_WEBGL
+        PcWeblGControll();
+#endif
+#if UNITY_IOS ||UNITY_ANDROID
+        IosAndroidControll();
+#endif
+    }
+    void PcWeblGControll()
+
+    {
         if (Input.GetKeyDown(KeyCode.W))
         {
             inputController = new Vector2(0, 1);
@@ -74,6 +84,15 @@ public class MovePlayer : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.A))
         {
             inputController = new Vector2(-1, 0);
+        }
+    }
+    void IosAndroidControll()
+    {
+        if (Input.touchCount > 0)
+        {
+         //   Touch myTouch = Input.GetTouch(0);
+       //    Vector2 positionOnScreen = myTouch.position;
+          //  Debug.Log(positionOnScreen);
         }
     }
     private void FixedUpdate()
