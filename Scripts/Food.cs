@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;   
 public class Food : MonoBehaviour
 {
     private float xPosition;
@@ -17,7 +17,7 @@ public class Food : MonoBehaviour
 
 
     public int score = 0;
-
+    public Text ScoreText;
     private void Start()
     {
         StartCoordinatesVector();
@@ -47,5 +47,8 @@ public class Food : MonoBehaviour
         yPosition = (int)Random.Range(-yBoard, yBoard);
     }
 
-    
+    private void Update()
+    {
+        ScoreText.text = "Your Score = " + score.ToString();
+    }
 }
