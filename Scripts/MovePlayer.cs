@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class MovePlayer : MonoBehaviour
 {
+
+    [SerializeField] AudioSource gameOverSound;
+    [SerializeField] AudioSource foodSound;
+
     // Start is called before the first frame update
     private Vector2 inputController;
     public bool isGameOver = false;
@@ -94,12 +98,15 @@ public class MovePlayer : MonoBehaviour
     {
         if (other.tag == "Food")
         {
+            foodSound.Play();
             Grow();
+            
         }
         if ((other.tag == "Player") || (other.tag == "Wall"))
         {
+            gameOverSound.Play();
             isGameOver = true;
-           
+            
         }
     }
 
