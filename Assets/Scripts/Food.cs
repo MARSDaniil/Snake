@@ -49,6 +49,6 @@ public class Food : MonoBehaviour
 
     private void Update()
     {
-        ScoreText.text = "Your Score = " + score.ToString();
+        ScoreText.text = "Ваш результат = " + score.ToString();
     }
 }
