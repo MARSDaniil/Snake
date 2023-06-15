@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: 3350e83e496da304fb9344333711c087
+  - enabled: 1
+    path: Assets/Scenes/FreePlay.unity
+    guid: d4308f7fcf1911a4cacd189d20be90b7
+  - enabled: 1
+    path: Assets/Scenes/Box.unity
+    guid: 3c546d31874387a4cac2116925a0d6f3
+  m_configObjects:
+    UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: aae6be1e279efd44d97807cd8adc784c, type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 6bb80a1c3cc845243b3206c3f1b2fc12, type: 2}
